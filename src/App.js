@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { store } from "./store";
+import { addTodo, deleteTodo, editTodo } from "./store/todoActionCreator";
+import "./App.css";
 
-function App() {
+const App = ({ todo }) => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {todo.map((todo, index) => (
+        <div key={todo}>
+          {todo}
+          <button onClick={() => store.dispatch(deleteTodo(index))}>X</button>
+          <button
+            onClick={() => {
+              const text = window.prompt("Edit todo", todo);
+              store.dispatch(editTodo(index, text));
+            }}
+          >
+            edit
+          </button>
+        </div>
+      ))}
+      <button onClick={() => store.dispatch(addTodo(Math.random().toString()))}>
+        add todo
+      </button>
     </div>
   );
-}
+};
 
 export default App;
