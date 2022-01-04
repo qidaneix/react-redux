@@ -1,5 +1,5 @@
 import { store } from "./store";
-import { increment, decrement } from "./store/counterActionCreator";
+import { increment, decrement } from "./store/counter";
 
 const Counter = ({ value }) => (
   <div>

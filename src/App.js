@@ -1,17 +1,21 @@
 import { store } from "./store";
-import { addTodo, deleteTodo, editTodo } from "./store/todoActionCreator";
-import "./App.css";
+import { addTodo, deleteTodo, editTodo, getTodo } from "./store/todo";
+import { useEffect } from "react";
 
 const App = ({ todo }) => {
+  useEffect(() => {
+    store.dispatch(getTodo());
+  }, []);
+
   return (
     <div className="App">
-      {todo.map((todo, index) => (
-        <div key={todo}>
-          {todo}
+      {todo.list.map((item, index) => (
+        <div key={item}>
+          {item}
           <button onClick={() => store.dispatch(deleteTodo(index))}>X</button>
           <button
             onClick={() => {
-              const text = window.prompt("Edit todo", todo);
+              const text = window.prompt("Edit todo", item);
               store.dispatch(editTodo(index, text));
             }}
           >
@@ -22,6 +26,7 @@ const App = ({ todo }) => {
       <button onClick={() => store.dispatch(addTodo(Math.random().toString()))}>
         add todo
       </button>
+      <div>loading: {String(todo.loading)}</div>
     </div>
   );
 };

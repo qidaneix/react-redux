@@ -1,5 +1,6 @@
 import { combineReducers, applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
+import thunk from "redux-thunk";
 import { counterReducer as counter } from "./counter";
 import { todoReducer as todo } from "./todo";
 
@@ -10,4 +11,4 @@ const reducer = combineReducers({
   todo,
 });
 
-export const store = createStore(reducer, applyMiddleware(logger));
+export const store = createStore(reducer, applyMiddleware(thunk, logger));
