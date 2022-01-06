@@ -1,15 +1,14 @@
-// import { addTodo, deleteTodo, editTodo, getTodo } from "./store/todo";
-import { addTodo, deleteTodo, editTodo } from "./store/todo";
-// import { useEffect } from "react";
+import { addTodo, deleteTodo, editTodo, getTodo } from "./store/todo";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 const App = () => {
   const todo = useSelector((state) => state.todo);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getTodo());
-  // }, []);
+  useEffect(() => {
+    dispatch(getTodo(Math.floor(Math.random() * 10)));
+  }, []);
 
   return (
     <div className="App">

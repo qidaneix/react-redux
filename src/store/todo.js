@@ -36,6 +36,7 @@
 // };
 
 import { createSlice } from "@reduxjs/toolkit";
+import { getTodo as fetchTodo } from "../api/getTodo";
 
 const todoSlice = createSlice({
   name: "todo",
@@ -53,8 +54,24 @@ const todoSlice = createSlice({
     deleteTodo: (state, { payload }) => {
       state.list.splice(payload.index, 1);
     },
+    getTodoRequest: (state) => {
+      state.loading = true;
+    },
+    getTodoSuccess: (state, { payload }) => {
+      state.list.push(...payload.list);
+      state.loading = false;
+    },
   },
 });
 
-export const { addTodo, editTodo, deleteTodo } = todoSlice.actions;
+export const { addTodo, editTodo, deleteTodo, getTodoRequest, getTodoSuccess } =
+  todoSlice.actions;
 export const todoReducer = todoSlice.reducer;
+
+export function getTodo(nums) {
+  return async (dispatch) => {
+    dispatch(getTodoRequest());
+    const list = await fetchTodo(nums);
+    dispatch(getTodoSuccess({ list }));
+  };
+}

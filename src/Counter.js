@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-// import { decrement, addCount } from "./store/counter";
-import { decrement, increment } from "./store/counter";
+import { decrement, increment, addCount } from "./store/counter";
 
 const Counter = () => {
   const value = useSelector((state) => state.counter);
@@ -9,8 +8,16 @@ const Counter = () => {
   return (
     <div>
       <h1>{value}</h1>
-      <button onClick={() => dispatch(increment())}>+</button>
-      <button onClick={() => dispatch(decrement())}>-</button>
+      <button onClick={() => dispatch(increment())}> + </button>
+      <button
+        onClick={() => {
+          const some = parseInt(window.prompt(), 10);
+          dispatch(addCount(some));
+        }}
+      >
+        + some
+      </button>
+      <button onClick={() => dispatch(decrement())}> - </button>
     </div>
   );
 };

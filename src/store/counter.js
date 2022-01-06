@@ -13,13 +13,14 @@
 // };
 
 import { createSlice } from "@reduxjs/toolkit";
-import { addCount } from "./counterActionCreator";
+import { addCount as add } from "../api/addCount";
 
 const counterSlice = createSlice({
   name: "counter",
   initialState: 0,
   reducers: {
-    increment: (state) => {
+    increment: (state, { payload }) => {
+      if (typeof payload === "number") return state + payload;
       return state + 1;
     },
     decrement: (state) => {
@@ -27,13 +28,14 @@ const counterSlice = createSlice({
       return state;
     },
   },
-  extraReducers: {
-    [addCount.fulfilled]: (state) => state + 1,
-    [addCount.pending]: () => {
-      console.log("pending");
-    },
-  },
 });
 
 export const { increment, decrement } = counterSlice.actions;
 export const counterReducer = counterSlice.reducer;
+
+export function addCount(number) {
+  return async (dispatch) => {
+    const num = await add(number);
+    dispatch(increment(num));
+  };
+}

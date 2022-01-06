@@ -1,7 +1,7 @@
-export function addCount() {
+export function addCount(number) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve();
+      resolve(number);
     }, 1000);
   });
 }
