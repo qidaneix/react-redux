@@ -1,25 +1,17 @@
 import { decrement, addCount } from "./store/counter";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-const mapStateToProps = (state) => {
-  return {
-    value: state.counter,
-  };
+const Counter = () => {
+  const value = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>{value}</h1>
+      <button onClick={() => dispatch(addCount())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+    </div>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    add: () => dispatch(addCount()),
-    minus: () => dispatch(decrement()),
-  };
-};
-
-const Counter = ({ value, add, minus }) => (
-  <div>
-    <h1>{value}</h1>
-    <button onClick={() => add()}>+</button>
-    <button onClick={() => minus()}>-</button>
-  </div>
-);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default Counter;
